@@ -18,8 +18,14 @@
         <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
+<q-footer class="row justify-center bg-orange">
+  <q-tabs class="bg-orange text-white shadow-2" v-for="tab in tabs" :key="tab.id">
+    <q-route-tab :to="tab.to"  :icon="tab.icon" :label="tab.label" />
 
+  </q-tabs>
+</q-footer>
     <q-drawer
+
       v-model="leftDrawerOpen"
       show-if-above
       bordered
@@ -33,20 +39,14 @@
         >
           Navigation
         </q-item-label>
-        <q-item clickable v-ripple to="/pageTodo">
+        <q-item clickable v-ripple :to="nav.to" v-for="nav in navs" :key="nav.id">
           <q-item-section avatar>
-            <q-avatar color="teal" text-color="white" icon="list" />
+            <q-avatar color="teal" text-color="white" :icon="nav.icon" />
           </q-item-section>
 
-          <q-item-section>todo</q-item-section>
+          <q-item-section>{{nav.label}}</q-item-section>
         </q-item>
-        <q-item clickable v-ripple to="/pageSettings">
-          <q-item-section avatar>
-            <q-avatar color="teal" text-color="white" icon="settings" />
-          </q-item-section>
 
-          <q-item-section>settings</q-item-section>
-        </q-item>
       </q-list>
     </q-drawer>
 
@@ -78,8 +78,56 @@ export default {
   data () {
     return {
       leftDrawerOpen: false,
-      essentialLinks: linksData
+      essentialLinks: linksData,
+      navs:[
+        {
+          id:1,
+             label: 'todo',
+          icon:'list',
+          to:'/pageTodo'
+        },
+        {
+          id:2,
+          label: 'settings',
+          icon:'settings',
+          to:'/pageSettings'
+        },
+        {
+          id:3,
+          label: 'About',
+          icon:'info',
+          to:'/about'
+        }
+      ],
+      tabs:[
+        {
+          id:1,
+          label: 'todo',
+          icon:'list',
+          to:'/pageTodo'
+        },
+        {
+          id:2,
+          label: 'settings',
+          icon:'settings',
+          to:'/pageSettings'
+        },
+        {
+          id:3,
+          label: 'About',
+          icon:'info',
+          to:'/about'
+        }
+
+      ]
     }
   }
 }
 </script>
+<style>
+@media screen and(min-width: 768px) {
+  .q-footer{
+    display:none;
+  }
+}
+</style>
